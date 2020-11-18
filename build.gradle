@@ -1,0 +1,27 @@
+plugins {
+    id "java"
+    id "application"
+    id "eclipse"
+    id "jacoco"
+    id "org.sonarqube" version "2.7"
+//    id "com.autonomousapps.dependency-analysis"  version "0.54.0"
+}
+
+repositories {
+    jcenter()
+}
+
+jacoco {
+    applyTo run
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:28.1-jre'
+    testImplementation 'junit:junit:4.12'
+}
+
+mainClassName = 'se.anders_raberg.adventofcode2020.DaysMain'
+
+applicationDistribution.from("$projectDir/inputs") {
+    into "inputs"
+}
