@@ -20,13 +20,11 @@ public class Day4 {
         private static boolean valid(PassportField pField, String data) {
             switch (pField) {
             case BYR:
-                int parseInt = Integer.parseInt(data);
-                return parseInt >= 1920 && parseInt <= 2002;
+                return inRange(Integer.parseInt(data), 1920, 2002);
             case ECL:
                 return EYE_COLOR.contains(data);
             case EYR:
-                int parseInt1 = Integer.parseInt(data);
-                return parseInt1 >= 2020 && parseInt1 <= 2030;
+                return inRange(Integer.parseInt(data), 2020, 2030);
             case HCL:
                 return data.matches("#[0-9,a-f]{6}");
             case HGT:
@@ -34,14 +32,13 @@ public class Day4 {
                 if (m.matches()) {
                     int height = Integer.parseInt(m.group(1));
                     if (m.group(2).equals("cm")) {
-                        return height >= 150 && height <= 193;
+                        return inRange(height, 150, 193);
                     }
-                    return height >= 59 && height <= 76;
+                    return inRange(height, 59, 76);
                 }
                 return false;
             case IYR:
-                int parseInt2 = Integer.parseInt(data);
-                return parseInt2 >= 2010 && parseInt2 <= 2020;
+                return inRange(Integer.parseInt(data), 2010, 2020);
             case PID:
                 return data.matches("[0-9]{9}");
             default:
@@ -77,6 +74,10 @@ public class Day4 {
             }
             return false;
         });
+    }
+
+    private static boolean inRange(int value, int min, int max) {
+        return value >= min && value <= max;
     }
 
 }
