@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 public class Day4 {
     private static final Logger LOGGER = Logger.getLogger(Day4.class.getName());
     private static final Set<String> EYE_COLOR = Set.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
-    private static final Set<String> FIELDS = Set.of("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid");
     private static final Pattern HGT_PATTERN = Pattern.compile("([0-9]*)(cm|in)");
 
     private enum PassportField {
@@ -67,7 +66,7 @@ public class Day4 {
     }
 
     private static boolean matchAll(String passport) {
-        return FIELDS.stream().allMatch(passport::contains);
+        return Arrays.stream(PassportField.values()).map(f -> f.toString().toLowerCase()).allMatch(passport::contains);
     }
 
     private static boolean matchAll2(String passport) {
