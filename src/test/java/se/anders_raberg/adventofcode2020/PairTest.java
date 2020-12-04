@@ -34,10 +34,8 @@ public class PairTest {
         assertEquals("Hello", testee.first());
         assertEquals((Integer)42, testee.second());
         assertEquals("(Hello, 42)", testee.toString());
-        assertTrue(testee.equals(new Pair<>("Hello", 42)));
-        assertTrue(testee.equals(testee));
-        assertFalse(testee.equals(null));
-        assertFalse(testee.equals(0));
+        assertEquals(new Pair<>("Hello", 42), testee);
+        assertNotEquals(testee, null);
     }
 
 }
