@@ -39,7 +39,7 @@ public class Day11 {
 
     private interface SeatFinder
             extends BiFunction<Pair<Integer, Integer>, Map<Pair<Integer, Integer>, Character>, List<Character>> {
-    };
+    }
 
     private static long iterate(SeatFinder seatFinder, Map<Pair<Integer, Integer>, Character> start, int limit) {
         Map<Pair<Integer, Integer>, Character> before = start;
