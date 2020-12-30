@@ -28,5 +28,6 @@ public class DaysMain {
         Day21.run();
         Day22.run();
         Day24.run();
+        Day25.run();
     }
 }
