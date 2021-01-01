@@ -44,23 +44,23 @@ public class Day23 {
         LOGGER.info(() -> "Part 2: " + value1 * value2);
     }
 
-    private static void runGame(Day23CircularList input, int startCup, int noOfCups, int rounds) {
-        Node currentCupNode = input.get(startCup);
+    private static void runGame(Day23CircularList cupCircle, int startCup, int noOfCups, int rounds) {
+        Node currentCupNode = cupCircle.get(startCup);
         for (int i = 0; i < rounds; i++) {
-            int p1 = input.removeAfter(currentCupNode);
-            int p2 = input.removeAfter(currentCupNode);
-            int p3 = input.removeAfter(currentCupNode);
+            int p1 = cupCircle.removeAfter(currentCupNode);
+            int p2 = cupCircle.removeAfter(currentCupNode);
+            int p3 = cupCircle.removeAfter(currentCupNode);
 
             int destinationCup = currentCupNode.value() == 1 ? noOfCups : currentCupNode.value() - 1;
             while (List.of(p1, p2, p3).contains(destinationCup)) {
                 destinationCup = destinationCup == 1 ? noOfCups : destinationCup - 1;
             }
 
-            Node destinationCupNode = input.get(destinationCup);
-            input.insertAfter(p3, destinationCupNode);
-            input.insertAfter(p2, destinationCupNode);
-            input.insertAfter(p1, destinationCupNode);
-            currentCupNode = input.next(currentCupNode);
+            Node destinationCupNode = cupCircle.get(destinationCup);
+            cupCircle.insertAfter(p3, destinationCupNode);
+            cupCircle.insertAfter(p2, destinationCupNode);
+            cupCircle.insertAfter(p1, destinationCupNode);
+            currentCupNode = cupCircle.next(currentCupNode);
         }
     }
 

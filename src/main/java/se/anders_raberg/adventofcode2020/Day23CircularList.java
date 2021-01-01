@@ -1,15 +1,14 @@
 package se.anders_raberg.adventofcode2020;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.collections4.map.HashedMap;
 
 public class Day23CircularList {
 
     private Node _head;
     private Node _tail;
-    private Map<Integer, Node> _nodes = new HashedMap<>();
+    private Map<Integer, Node> _nodes = new HashMap<>();
 
     public static class Node {
         private int _value;
@@ -44,12 +43,12 @@ public class Day23CircularList {
         return newNode;
     }
 
-    public Node insertAfter(int x, Node node) {
-        Node newNode = new Node(x);
+    public Node insertAfter(int value, Node node) {
+        Node newNode = new Node(value);
 
         newNode._next = node._next;
         node._next = newNode;
-        _nodes.put(x, newNode);
+        _nodes.put(value, newNode);
         return newNode;
     }
 
@@ -66,8 +65,8 @@ public class Day23CircularList {
         return node._next;
     }
 
-    public Node get(int x) {
-        return _nodes.get(x);
+    public Node get(int value) {
+        return _nodes.get(value);
     }
 
     @Override
