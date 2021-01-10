@@ -26,6 +26,7 @@ public class DaysMain {
         Day17Part2.run();
         Day18Part1.run();
         Day19.run();
+        Day20Part1.run();
         Day21.run();
         Day22.run();
         Day23.run();
