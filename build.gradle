@@ -4,7 +4,7 @@ plugins {
     id "eclipse"
     id "jacoco"
     id "org.sonarqube" version "2.7"
-//    id "com.autonomousapps.dependency-analysis"  version "0.54.0"
+    id "com.autonomousapps.dependency-analysis"  version "0.71.0"
 }
 
 repositories {
@@ -19,6 +19,7 @@ dependencies {
     implementation 'com.google.guava:guava:28.1-jre'
     implementation 'org.apache.commons:commons-lang3:3.11'
     implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.apache.commons:commons-math3:3.6.1'
     testImplementation 'junit:junit:4.12'
 }
 
