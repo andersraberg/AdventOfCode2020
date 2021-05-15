@@ -28,3 +28,9 @@ mainClassName = 'se.anders_raberg.adventofcode2020.DaysMain'
 applicationDistribution.from("$projectDir/inputs") {
     into "inputs"
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
