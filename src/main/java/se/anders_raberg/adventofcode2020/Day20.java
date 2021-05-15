@@ -32,30 +32,7 @@ public class Day20 {
     private Day20() {
     }
 
-    private static class Edges extends Quadruple<Integer, Integer, Integer, Integer> {
-        public Edges(Integer first, Integer second, Integer third, Integer forth) {
-            // first => Top, second => Bottom, third => Left, fourth => Right
-            super(first, second, third, forth);
-
-        }
-
-        public boolean hasCommonEdge(Edges other) {
-            return !Sets.intersection(Set.of(first(), second(), third(), fourth()),
-                    Set.of(other.first(), other.second(), other.third(), other.fourth())).isEmpty();
-        }
-    }
-
-    private static class MatrixWrapper {
-        private final char[][] _matrix;
-
-        public MatrixWrapper(char[][] matrix) {
-            _matrix = matrix;
-        }
-
-        public char[][] matrix() {
-            return _matrix;
-        }
-
+    private record MatrixWrapper(char[][] matrix) {
     }
 
     private static final List<String> MONSTER = List.of( //
@@ -68,7 +45,7 @@ public class Day20 {
 
         int outerSize = IntMath.sqrt(fileSections.length, RoundingMode.UNNECESSARY);
 
-        Map<Edges, Integer> idsForEdgeCombinations = new HashMap<>();
+        Map<Quadruple<Integer, Integer, Integer, Integer>, Integer> idsForEdgeCombinations = new HashMap<>();
         Map<MatrixWrapper, Integer> idsForTilePermutations = new HashMap<>();
 
         char[][] monsterMatrix = new char[MONSTER.get(0).length()][MONSTER.size()];
@@ -103,9 +80,9 @@ public class Day20 {
         }
 
         Map<Integer, Set<Integer>> neighbours = new HashMap<>();
-        for (Entry<Edges, Integer> entry : idsForEdgeCombinations.entrySet()) {
+        for (Entry<Quadruple<Integer, Integer, Integer, Integer>, Integer> entry : idsForEdgeCombinations.entrySet()) {
             Set<Integer> set = idsForEdgeCombinations.entrySet().stream()
-                    .filter(e -> e.getKey().hasCommonEdge(entry.getKey()))
+                    .filter(e -> hasCommonEdge(e.getKey(), entry.getKey()))
                     .filter(e -> !e.getValue().equals(entry.getValue())) //
                     .map(Entry::getValue) //
                     .collect(Collectors.toSet());
@@ -177,6 +154,12 @@ public class Day20 {
         }
     }
 
+    private static boolean hasCommonEdge(Quadruple<Integer, Integer, Integer, Integer> edges1,
+            Quadruple<Integer, Integer, Integer, Integer> edges2) {
+        return !Sets.intersection(Set.of(edges1.first(), edges1.second(), edges1.third(), edges1.fourth()),
+                Set.of(edges2.first(), edges2.second(), edges2.third(), edges2.fourth())).isEmpty();
+    }
+
     private static MatrixWrapper[][] removeAllBorder(MatrixWrapper[][] matrix) {
         MatrixWrapper[][] result = new MatrixWrapper[matrix.length][matrix.length];
         for (int y = 0; y < matrix.length; y++) {
@@ -236,14 +219,14 @@ public class Day20 {
         return total;
     }
 
-    private static Edges edgeValues(char[][] matrix) {
+    private static Quadruple<Integer, Integer, Integer, Integer> edgeValues(char[][] matrix) {
         StringBuilder sbTop = new StringBuilder();
         StringBuilder sbBottom = new StringBuilder();
         for (int x = 0; x < matrix[0].length; x++) {
             sbTop.append(matrix[x][0]);
             sbBottom.append(matrix[x][matrix.length - 1]);
         }
-        return new Edges(parseBinaryInt(sbTop.toString()), //
+        return new Quadruple<>(parseBinaryInt(sbTop.toString()), //
                 parseBinaryInt(sbBottom.toString()), //
                 parseBinaryInt(new String(matrix[0])), //
                 parseBinaryInt(new String(matrix[matrix.length - 1])));
