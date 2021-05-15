@@ -24,24 +24,9 @@ public class Day16 {
     private static final Logger LOGGER = Logger.getLogger(Day16.class.getName());
     private static final Pattern PATTERN_FIELD = Pattern.compile("(.+): (\\d+)\\-(\\d+) or (\\d+)\\-(\\d+)");
 
-    private static class TicketField {
-        private final String _name;
-        private final Range<Long> _firstRange;
-        private final Range<Long> _secondRange;
-
-        private TicketField(String name, Range<Long> firstRange, Range<Long> secondRange) {
-            super();
-            _name = name;
-            _firstRange = firstRange;
-            _secondRange = secondRange;
-        }
-
-        public String name() {
-            return _name;
-        }
-
+    private record TicketField(String name, Range<Long> firstRange, Range<Long> secondRange) {
         public boolean inRange(long value) {
-            return _firstRange.contains(value) || _secondRange.contains(value);
+            return firstRange.contains(value) || secondRange.contains(value);
         }
     }
 
