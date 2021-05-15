@@ -33,7 +33,7 @@ public class PairTest {
         Pair<String, Integer> testee = new Pair<>("Hello", 42);
         assertEquals("Hello", testee.first());
         assertEquals((Integer)42, testee.second());
-        assertEquals("(Hello, 42)", testee.toString());
+        assertEquals("Pair[first=Hello, second=42]", testee.toString());
         assertEquals(new Pair<>("Hello", 42), testee);
         assertNotEquals(testee, null);
     }
