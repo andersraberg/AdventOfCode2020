@@ -10,9 +10,11 @@ node {
 
     stage('Code coverage') {
         sh './gradlew jacocoTestReport -Pversion=$BUILD_NUMBER'
-        jacoco( 
-            execPattern: 'build/jacoco/*.exec',
-        )
+
+        recordCoverage tools: [
+            [parser: 'JACOCO', pattern: '**/build/reports/jacoco/test/jacocoTestReport.xml'] 
+        ]	
+
     }
 
     stage('Sonar') {
@@ -20,17 +22,4 @@ node {
             sh './gradlew sonarqube -Dsonar.projectKey=AdventofCode2020 -Pversion=$BUILD_NUMBER'
         }
     }
-
-    stage('Report') {
-        junit 'build/test-results/**/*.xml'
-        sh 'mv build/reports/profile/*.html build/reports/profile/index.html'
-        publishHTML([allowMissing: false,
-                     alwaysLinkToLastBuild: false,
-                     keepAll: true,
-                     reportDir: 'build/reports/profile/',
-                     reportFiles: 'index.html',
-                     reportName: 'Gradle profile',
-                     reportTitles: ''])
-    }
-    
 }
